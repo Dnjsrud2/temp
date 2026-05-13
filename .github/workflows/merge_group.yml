@@ -1,0 +1,27 @@
+name: Merge-group example
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  merge_group:
+
+jobs:
+  test-and-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: |
+          echo "Run your test suite here"
+          # exit 0
+
+      - name: Print event info
+        run: |
+          echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
+          echo "github.event.action=${{ github.event.action }}"
+          echo "github.event.pull_request.number=${{ github.event.pull_request.number }}"
+          echo "Full event JSON:"
+          cat "$GITHUB_EVENT_PATH"
+
